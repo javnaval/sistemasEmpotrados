@@ -73,6 +73,14 @@ END component debouncer;
     );
 end component divisor1;
 
+component divisor20 is 
+ port (
+        rst: in STD_LOGIC;
+        clk_in: in STD_LOGIC;
+        clk_out: out STD_LOGIC
+    );
+end component divisor20;
+
 	 component upcount IS
 	PORT (Clock, Resetn, Enable : IN STD_LOGIC ;
 	Q : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) ) ;
@@ -82,7 +90,7 @@ END component upcount;
 	signal current_state:states;
 	signal next_state:states;
 	
-	signal clk_1hz: std_logic;
+	signal clk_1hz, clk_20hz: std_logic;
 	signal x_jugar, jugar, rst: std_logic;
 	signal num1, num2, num3, pg, pm:std_logic;
 	signal num1_res, num2_res, num3_res:std_logic_vector(1 downto 0);
@@ -113,6 +121,12 @@ begin
 	rst => rst,
 	clk_out=>clk_1hz);
 	
+	divisor2: divisor20 
+	port map(clk_in => clk_in,
+	rst => rst,
+	clk_out=>clk_20hz);
+
+	
 	deb: debouncer
 	port map(rst => not rst,
 	clk  => clk_in,
@@ -121,21 +135,21 @@ begin
 	
 	slot1: upcount
 	port map(
-	Clock => clk_1hz,
+	Clock => clk_20hz,
 	Resetn => not rst,
 	Enable => not num1,
 	Q => num1_res );
 	
 	slot2: upcount
 	port map(
-	Clock => clk_1hz,
+	Clock => clk_20hz,
 	Resetn => not rst,
 	Enable => not num2,
 	Q => num2_res);
 	
 	slot3: upcount
 	port map(
-	Clock => clk_1hz,
+	Clock => clk_20hz,
 	Resetn => not rst,
 	Enable => not num3,
 	Q => num3_res);

@@ -100,13 +100,13 @@ begin
 	leds5 <= num3_res(0);
 	leds6 <= num3_res(1);
 	
-	display6 <= pm;
-	display0 <= pg;
-	display1 <= pg;
-	display2 <= pg;
-	display3 <= pg;
-	display4 <= pg;
-	display5 <= pg;
+	display6 <= pm and clk_1hz;
+	display0 <= pg and clk_1hz;
+	display1 <= pg and clk_1hz;
+	display2 <= pg and clk_1hz;
+	display3 <= pg and clk_1hz;
+	display4 <= pg and clk_1hz;
+	display5 <= pg and clk_1hz;
 
 	divisor: divisor1 
 	port map(clk_in => clk_in,
